@@ -1,1 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAF Program | €20</title>
+  <meta name="description" content="RAF Program is a modern fitness program built for strength, flexibility, and real results." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --bg-soft: #11131b;
+      --card: rgba(255,255,255,0.06);
+      --card-border: rgba(255,255,255,0.12);
+      --text: #f5f7fb;
+      --muted: #a6adbb;
+      --accent: #dc2626;
+      --accent-2: #dc2626;
+      --success: #34d399;
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      --radius: 24px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(220,38,38,0.22), transparent 30%),
+        radial-gradient(circle at top right, rgba(22,163,74,0.18), transparent 28%),
+        linear-gradient(180deg, #07080c 0%, #0a0a0f 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .container {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(10,10,15,0.65);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-size: 1.05rem;
+    }
+
+    .brand-badge {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 10px 24px rgba(220,38,38,0.35);
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      border-radius: 16px;
+      padding: 14px 20px;
+      transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    
+
+    
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 16px 40px rgba(220,38,38,0.28);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .hero {
+      padding: 72px 0 56px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero-copy,
+    .hero-card,
+    .section-card,
+    .price-card,
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      padding: 38px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-copy::before {
+      content: "";
+      position: absolute;
+      inset: auto -60px -60px auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(220,38,38,0.22), transparent 70%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      color: #d8dded;
+      font-size: 0.92rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: clamp(2.6rem, 6vw, 5.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+    }
+
+    .gradient-text {
+      color: #ffffff;
+    }
+
+    .lead {
+      font-size: 1.08rem;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 640px;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .hero-points {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .point {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .point strong {
+      display: block;
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+
+    .point span {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .hero-card {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100%;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)),
+        linear-gradient(145deg, rgba(220,38,38,0.12), rgba(22,163,74,0.08));
+    }
+
+    .program-visual {
+      min-height: 320px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background:
+        radial-gradient(circle at 30% 20%, rgba(220,38,38,0.35), transparent 28%),
+        radial-gradient(circle at 70% 70%, rgba(22,163,74,0.25), transparent 30%),
+        linear-gradient(160deg, #121521 0%, #0f1118 100%);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .visual-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 12px;
+    }
+
+    .visual-label {
+      font-size: 0.9rem;
+      color: #e8ebf7;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .price-bubble {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background: var(--accent);
+      box-shadow: 0 18px 40px rgba(22,163,74,0.22);
+      color: white;
+      font-weight: 800;
+      line-height: 1.05;
+      font-size: 1.15rem;
+    }
+
+    .mock-lines {
+      display: grid;
+      gap: 12px;
+    }
+
+    .mock-line,
+    .mock-line-short {
+      height: 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.18), rgba(255,255,255,0.04));
+    }
+
+    .mock-line-short { width: 62%; }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .stat-box {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .stat-box strong {
+      display: block;
+      font-size: 1.15rem;
+      margin-bottom: 4px;
+    }
+
+    .stat-box span { color: var(--muted); font-size: 0.92rem; }
+
+    section {
+      padding: 20px 0 70px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      letter-spacing: -0.04em;
+    }
+
+    .section-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      max-width: 650px;
+      line-height: 1.7;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 18px;
+    }
+
+    .feature-card {
+      padding: 24px;
+    }
+
+    .icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-size: 1.2rem;
+      margin-bottom: 18px;
+      background: linear-gradient(135deg, rgba(220,38,38,0.22), rgba(22,163,74,0.18));
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .feature-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+      letter-spacing: -0.03em;
+    }
+
+    .feature-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .pricing-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .section-card,
+    .price-card {
+      padding: 28px;
+    }
+
+    .included-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .included-item {
+      display: flex;
+      gap: 12px;
+      align-items: start;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .included-item:last-child { border-bottom: none; }
+
+    .check {
+      width: 28px;
+      height: 28px;
+      flex: 0 0 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(52,211,153,0.14);
+      color: var(--success);
+      font-weight: 800;
+      border: 1px solid rgba(52,211,153,0.18);
+    }
+
+    .included-item strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .included-item span {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 0.97rem;
+    }
+
+    .price-card {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)),
+        linear-gradient(135deg, rgba(220,38,38,0.12), rgba(22,163,74,0.10));
+    }
+
+    .price-card::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.10), transparent 70%);
+      right: -40px;
+      top: -40px;
+      pointer-events: none;
+    }
+
+    .price-tag {
+      display: inline-flex;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      color: #e7ebf7;
+      margin-bottom: 16px;
+      border: 1px solid rgba(255,255,255,0.10);
+      font-size: 0.92rem;
+    }
+
+    .price-amount {
+      font-size: clamp(3rem, 6vw, 4.8rem);
+      margin: 0;
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+    }
+
+    .price-note {
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 12px 0 22px;
+      max-width: 460px;
+    }
+
+    .price-perks {
+      display: grid;
+      gap: 12px;
+      margin: 22px 0 26px;
+    }
+
+    .price-perks div {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 14px 16px;
+      color: #e9edf9;
+    }
+
+    .footer {
+      padding: 24px 0 50px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .footer-box {
+      padding: 20px 24px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .hero-image{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .hero-image img{
+      width:100%;
+      max-width:420px;
+      border-radius:20px;
+      object-fit:cover;
+      box-shadow:0 30px 80px rgba(0,0,0,0.6);
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .pricing-wrap,
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-points,
+      .stats-row {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        align-items: start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-inner { gap: 12px; }
+      .nav-links .chip { display: none; }
+      .hero-copy,
+      .hero-card,
+      .section-card,
+      .price-card,
+      .feature-card { padding: 22px; }
+      .program-visual { min-height: 280px; }
+      .btn { width: 100%; }
+      .hero-actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#top" class="brand">
+        <span class="brand-badge">RF</span>
+        <span>RAF Program</span>
+      </a>
+      <div class="nav-links">
+        <a class="chip" href="#features">Benefits</a>
+        <a class="chip" href="#pricing">Pricing</a>
+        <a class="btn btn-primary" href="#buy">Buy Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">🔥 Strength • Flexibility • Real Results</div>
+          <h1>
+            Build <span class="gradient-text">Strength</span> and<br>
+            move with power.
+          </h1>
+          <p class="lead">
+            RAF Program is a modern training system designed to build strength, improve flexibility, and help your body move better. Many programs make people feel stiff and limited. RAF Program is built to make you stronger, more athletic, more disciplined, and more flexible.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#buy">Get RAF Program for €20</a>
+            <a class="btn btn-secondary" href="#features">See the Benefits</a>
+          </div>
+
+          <div class="hero-points">
+            <div class="point">
+              <strong>Build Real Strength</strong>
+              <span>A clear system designed to help you train hard and progress with purpose.</span>
+            </div>
+            <div class="point">
+              <strong>Stay Flexible</strong>
+              <span>Built to improve movement quality so your body feels powerful, mobile, and athletic.</span>
+            </div>
+            <div class="point">
+              <strong>Better Than Basic Plans</strong>
+              <span>Many programs leave you stiff and heavy. RAF Program focuses on strength with flexibility.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-image">
+          <img src="raf-photo.jpg" alt="RAF Program athlete example" />
+        </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Why choose RAF Program?</h2>
+            <p>
+              RAF Program was created for people who want more than a basic workout routine. A lot of programs build size but reduce movement quality. This program is built to develop strength and flexibility together, so you do not just look better — you move better too.
+            </p>
+          </div>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="icon">🪖</div>
+            <h3>Military Discipline</h3>
+            <p>Develop a disciplined training mindset. RAF Program helps you train with consistency, focus, and structure like a disciplined athlete.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon">⚡</div>
+            <h3>Strength Without Stiffness</h3>
+            <p>Train with purpose and intensity without turning your body into something slow, tight, or restricted.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon">🏋️</div>
+            <h3>Flexible and Athletic</h3>
+            <p>RAF Program helps your body become stronger while staying mobile, fluid, and ready for real movement.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon">🎯</div>
+            <h3>Simple and Effective</h3>
+            <p>No fluff, no confusion, just a focused system built to deliver better performance for only €20.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="container pricing-wrap">
+        <div class="section-card">
+          <div class="section-head" style="margin-bottom: 10px;">
+            <div>
+              <h2>What you get</h2>
+              <p>Everything inside RAF Program is built around one goal: helping you become stronger and more flexible at the same time.</p>
+            </div>
+          </div>
+
+          <div class="included-list">
+            <div class="included-item">
+              <div class="check">✓</div>
+              <div>
+                <strong>Structured Training Plan</strong>
+                <span>A complete layout that shows you how to train with direction, intensity, and consistency.</span>
+              </div>
+            </div>
+
+            <div class="included-item">
+              <div class="check">✓</div>
+              <div>
+                <strong>Strength + Flexibility Focus</strong>
+                <span>The system is designed to improve force, control, and mobility instead of making you feel stiff.</span>
+              </div>
+            </div>
+
+            <div class="included-item">
+              <div class="check">✓</div>
+              <div>
+                <strong>Easy to Follow Format</strong>
+                <span>Simple, clean, and direct so you can focus on training and getting results.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="price-card" id="buy">
+          <span class="price-tag">RAF Program • Strength & Flexibility</span>
+          <h2 class="price-amount">€20</h2>
+          <p class="price-note">
+            If you are tired of programs that make you feel tight, slow, and restricted, RAF Program gives you a better path. Build strength, improve flexibility, and train your body to perform and move the way it should.
+          </p>
+
+          <div class="price-perks">
+            <div>Build strength with purpose</div>
+            <div>Improve flexibility and movement</div>
+            <div>Start today for only €20</div>
+          </div>
+
+          <a class="btn btn-primary" href="#" onclick="alert('Your payment link will be added here.'); return false;">Buy RAF Program</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-box">
+        <span>© 2026 RAF Program. All rights reserved.</span>
+        <span>Build strength. Stay flexible. Move better.</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
 
