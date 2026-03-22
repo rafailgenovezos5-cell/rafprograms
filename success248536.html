@@ -88,8 +88,7 @@
     }
 
     .download-btn,
-    .back-btn,
-    .unlock-btn {
+    .back-btn {
       display: inline-block;
       width: 100%;
       text-align: center;
@@ -100,18 +99,14 @@
       font-size: 16px;
       transition: 0.2s ease;
       margin-top: 12px;
-      border: none;
     }
 
-    .download-btn,
-    .unlock-btn {
+    .download-btn {
       background: var(--accent);
       color: white;
-      cursor: pointer;
     }
 
-    .download-btn:hover,
-    .unlock-btn:hover {
+    .download-btn:hover {
       transform: translateY(-2px);
       opacity: 0.95;
     }
@@ -144,30 +139,6 @@
       font-weight: 600;
     }
 
-    .password-input {
-      width: 100%;
-      background: #0b0d12;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
-      color: white;
-      font-size: 16px;
-      outline: none;
-      margin-top: 10px;
-    }
-
-    .error-text {
-      color: #ff6b6b;
-      font-size: 14px;
-      margin-top: 10px;
-      text-align: center;
-      min-height: 20px;
-    }
-
-    #protectedContent {
-      display: none;
-    }
-
     @media (max-width: 640px) {
       .card {
         padding: 22px;
@@ -189,56 +160,41 @@
 </head>
 <body>
   <div class="card">
-    <div id="loginBox">
-      <h1>Enter Password</h1>
-      <p class="subtitle">
-        Enter your password to access the RAF Program.
-      </p>
+    <h1>Thank You For Your Purchase</h1>
+    <p class="subtitle">
+      Your RAF Program is ready below.
+    </p>
 
-      <div class="section">
-        <div class="section-title">Password Required</div>
-        <p class="small-text">Type the password you received after purchase.</p>
-        <input
-          type="password"
-          id="passwordInput"
-          class="password-input"
-          placeholder="Enter password"
-        />
-        <button class="unlock-btn" onclick="checkPassword()">Unlock Access</button>
-        <div class="error-text" id="errorMsg"></div>
-      </div>
-
-      <a class="back-btn" href="index.html">Back To Home</a>
+    <div class="section">
+      <div class="section-title">Your PDF Password</div>
+      <p class="small-text">Use this password to open your RAF Program PDF:</p>
+      <div class="code-box">RAF2026fit!</div>
     </div>
 
-    <div id="protectedContent">
-      <h1>Thank You For Your Purchase</h1>
-      <p class="subtitle">
-        Your RAF Program is ready below.
+    <div class="section">
+      <div class="section-title">Download Your PDF</div>
+      <p class="small-text">
+        Click the button below to open or download your program.
       </p>
 
-      <div class="section">
-        <div class="section-title">Your PDF Password</div>
-        <p class="small-text">Use this password to open your RAF Program PDF:</p>
-        <div class="code-box">RAF2026fit!</div>
+      <a class="download-btn" href="./RAF%20Program.pdf" target="_blank">
+        Open RAF Program PDF
+      </a>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Video Access</div>
+      <div class="video-box">
+        <iframe 
+  src="https://www.youtube.com/embed/l7SGQVMtLNg"
+  style="width:100%; height:315px; border:0; border-radius:12px;"
+  allowfullscreen>
+</iframe>
       </div>
+    </div>
 
-      <div class="section">
-        <div class="section-title">Download Your PDF</div>
-        <p class="small-text">
-          Click the button below to open or download your program.
-        </p>
-
-        <a class="download-btn" href="./RAF%20Program.pdf" target="_blank">
-          Open RAF Program PDF
-        </a>
-      </div>
-
-      <div class="section">
-        <div class="section-title">Video Access</div>
-        <div class="video-box">
-          <iframe
-            src="https://www.youtube.com/embed/l7SGQVMtLNg"
-            style="width:100%; height:315px; border:0; border-radius:12px;"
-            allowfullscreen>
-          </iframe
+    <a class="back-btn" href="index.html">Back To Home</a>
+  </div>
+  
+</body>
+</html>
