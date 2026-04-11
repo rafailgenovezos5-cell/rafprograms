@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Thank You | RAF Program</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg: #0a0a0f;
@@ -17,169 +17,16 @@
       --border: rgba(255,255,255,0.08);
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      min-height: 100%;
-    }
-
     body {
+      margin: 0;
       font-family: 'Inter', sans-serif;
       background: var(--bg);
       color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       padding: 24px;
-    }
-
-    body.locked {
-      overflow: hidden;
-    }
-
-    /* PASSWORD GATE */
-    #passwordGate {
-      position: fixed;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      background: #05070c;
-      z-index: 999999;
-    }
-
-    body.unlocked #passwordGate {
-      display: none;
-    }
-
-    .gate-card {
-      width: 100%;
-      max-width: 760px;
-      background: linear-gradient(180deg, #0d1220 0%, #0a0f1a 100%);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 28px;
-      padding: 32px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
-      text-align: center;
-    }
-
-    .gate-title {
-      font-size: 42px;
-      margin: 0 0 12px;
-      color: var(--accent);
-      font-weight: 800;
-    }
-
-    .gate-subtitle {
-      font-size: 18px;
-      color: var(--muted);
-      margin: 0 0 28px;
-      line-height: 1.6;
-    }
-
-    .gate-section {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 20px;
-      margin-bottom: 18px;
-      text-align: left;
-    }
-
-    .gate-section-title {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: var(--text);
-    }
-
-    .gate-small-text {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.6;
-      margin-top: 10px;
-      margin-bottom: 14px;
-    }
-
-    .password-input {
-      width: 100%;
-      background: #0b0d12;
-      border: 1px solid var(--border);
-      color: white;
-      border-radius: 14px;
-      padding: 16px;
-      font-size: 16px;
-      outline: none;
-      margin-bottom: 12px;
-    }
-
-    .password-input:focus {
-      border-color: rgba(255,45,45,0.5);
-      box-shadow: 0 0 0 3px rgba(255,45,45,0.12);
-    }
-
-    .unlock-btn,
-    .back-btn {
-      display: inline-block;
-      width: 100%;
-      text-align: center;
-      text-decoration: none;
-      padding: 16px 20px;
-      border-radius: 14px;
-      font-weight: 700;
-      font-size: 16px;
-      transition: 0.2s ease;
-      margin-top: 12px;
-      cursor: pointer;
-    }
-
-    .unlock-btn {
-      background: var(--accent);
-      color: white;
-      border: none;
-    }
-
-    .unlock-btn:hover {
-      transform: translateY(-2px);
-      opacity: 0.95;
-    }
-
-    .back-btn {
-      background: transparent;
-      color: white;
-      border: 1px solid var(--border);
-    }
-
-    .back-btn:hover {
-      background: rgba(255,255,255,0.04);
-    }
-
-    .error-text {
-      color: #ff7b7b;
-      font-size: 14px;
-      margin-top: 10px;
-      display: none;
-    }
-
-    .error-text.show {
-      display: block;
-    }
-
-    /* REAL SITE */
-    #siteContent {
-      display: none;
-      width: 100%;
-    }
-
-    body.unlocked #siteContent {
-      display: block;
     }
 
     .card {
@@ -189,205 +36,100 @@
       border: 1px solid var(--border);
       border-radius: 24px;
       padding: 32px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
       text-align: center;
-      margin: 0 auto;
     }
 
     h1 {
-      font-size: 42px;
-      margin: 0 0 12px;
+      font-size: 40px;
       color: var(--accent);
-      font-weight: 800;
+      margin-bottom: 10px;
     }
 
     .subtitle {
-      font-size: 18px;
       color: var(--muted);
-      margin: 0 0 28px;
-      line-height: 1.6;
+      margin-bottom: 25px;
     }
 
     .section {
       background: rgba(255,255,255,0.03);
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: 16px;
       padding: 20px;
-      margin-bottom: 18px;
+      margin-bottom: 15px;
       text-align: left;
     }
 
     .section-title {
-      font-size: 20px;
       font-weight: 700;
       margin-bottom: 10px;
-      color: var(--text);
     }
 
     .code-box {
       background: #0b0d12;
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px 16px;
-      font-size: 22px;
+      padding: 14px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 20px;
       font-weight: 800;
       color: var(--accent);
+    }
+
+    .btn {
+      display: block;
       text-align: center;
-      letter-spacing: 1px;
+      padding: 14px;
+      border-radius: 12px;
       margin-top: 10px;
-    }
-
-    .download-btn,
-    .back-home-btn {
-      display: inline-block;
-      width: 100%;
-      text-align: center;
       text-decoration: none;
-      padding: 16px 20px;
-      border-radius: 14px;
       font-weight: 700;
-      font-size: 16px;
-      transition: 0.2s ease;
-      margin-top: 12px;
     }
 
-    .download-btn {
+    .primary {
       background: var(--accent);
       color: white;
     }
 
-    .download-btn:hover {
-      transform: translateY(-2px);
-      opacity: 0.95;
-    }
-
-    .back-home-btn {
-      background: transparent;
-      color: white;
+    .secondary {
       border: 1px solid var(--border);
+      color: white;
+      background: transparent;
     }
 
-    .back-home-btn:hover {
-      background: rgba(255,255,255,0.04);
-    }
-
-    .small-text {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.6;
-      margin-top: 10px;
-    }
-
-    .video-box {
-      margin-top: 10px;
-      padding: 16px;
-      border-radius: 14px;
-      background: #0b0d12;
-      border: 1px dashed var(--border);
-      color: var(--muted);
-      text-align: center;
-      font-weight: 600;
-    }
-
-    @media (max-width: 640px) {
-      .card,
-      .gate-card {
-        padding: 22px;
-      }
-
-      h1,
-      .gate-title {
-        font-size: 32px;
-      }
-
-      .subtitle,
-      .gate-subtitle {
-        font-size: 16px;
-      }
-
-      .code-box {
-        font-size: 18px;
-      }
+    iframe {
+      width: 100%;
+      height: 315px;
+      border: 0;
+      border-radius: 12px;
     }
   </style>
 </head>
-<body class="locked">
 
-      <a class="back-btn" href="index.html">Back To Home</a>
+<body>
+
+  <div class="card">
+    <h1>Thank You For Your Purchase</h1>
+    <p class="subtitle">Your RAF Program is ready below.</p>
+
+    <div class="section">
+      <div class="section-title">PDF Password</div>
+      <div class="code-box">RAF2026fit!</div>
     </div>
+
+    <div class="section">
+      <div class="section-title">Download Program</div>
+      <a class="btn primary" href="./RAF%20Program.pdf" target="_blank">
+        Open PDF
+      </a>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Video Access</div>
+      <iframe src="https://www.youtube.com/embed/l7SGQVMtLNg" allowfullscreen></iframe>
+    </div>
+
+    <a class="btn secondary" href="index.html">Back To Home</a>
   </div>
 
-  <!-- REAL SITE -->
-  <div id="siteContent">
-    <div class="card">
-      <h1>Thank You For Your Purchase</h1>
-      <p class="subtitle">
-        Your RAF Program is ready below.
-      </p>
-
-      <div class="section">
-        <div class="section-title">Your PDF Password</div>
-        <p class="small-text">Use this password to open your RAF Program PDF:</p>
-        <div class="code-box">RAF2026fit!</div>
-      </div>
-
-      <div class="section">
-        <div class="section-title">Download Your PDF</div>
-        <p class="small-text">
-          Click the button below to open or download your program.
-        </p>
-
-        <a class="download-btn" href="./RAF%20Program.pdf" target="_blank">
-          Open RAF Program PDF
-        </a>
-      </div>
-
-      <div class="section">
-        <div class="section-title">Video Access</div>
-        <div class="video-box">
-          <iframe 
-            src="https://www.youtube.com/embed/l7SGQVMtLNg"
-            style="width:100%; height:315px; border:0; border-radius:12px;"
-            allowfullscreen>
-          </iframe>
-        </div>
-      </div>
-
-      <a class="back-home-btn" href="index.html">Back To Home</a>
-    </div>
-  </div>
-
-  <script>
-    const password = "RafProgram4125@";
-
-    function unlockSite() {
-      document.body.classList.remove("locked");
-      document.body.classList.add("unlocked");
-      sessionStorage.setItem("raf_access_granted", "true");
-    }
-
-    function checkPassword() {
-      const input = document.getElementById("passwordInput").value;
-      const error = document.getElementById("errorText");
-
-      if (input === password) {
-        error.classList.remove("show");
-        unlockSite();
-      } else {
-        error.classList.add("show");
-      }
-    }
-
-    document.getElementById("passwordInput").addEventListener("keydown", function(e) {
-      if (e.key === "Enter") {
-        checkPassword();
-      }
-    });
-
-    if (sessionStorage.getItem("raf_access_granted") === "true") {
-      unlockSite();
-    }
-  </script>
-  
 </body>
 </html>
