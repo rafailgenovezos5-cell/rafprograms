@@ -777,6 +777,48 @@
       </div>
     </div>
   </footer>
+  <script>
+const slider = document.getElementById("slider");
+const afterImage = document.getElementById("afterImage");
+const container = document.getElementById("sliderContainer");
+
+let isDragging = false;
+
+slider.addEventListener("mousedown", () => isDragging = true);
+window.addEventListener("mouseup", () => isDragging = false);
+
+window.addEventListener("mousemove", (e) => {
+  if (!isDragging) return;
+
+  let rect = container.getBoundingClientRect();
+  let x = e.clientX - rect.left;
+
+  x = Math.max(0, Math.min(x, rect.width));
+
+  let percent = (x / rect.width) * 100;
+
+  slider.style.left = percent + "%";
+  afterImage.style.width = percent + "%";
+});
+
+// mobile
+slider.addEventListener("touchstart", () => isDragging = true);
+window.addEventListener("touchend", () => isDragging = false);
+
+window.addEventListener("touchmove", (e) => {
+  if (!isDragging) return;
+
+  let rect = container.getBoundingClientRect();
+  let x = e.touches[0].clientX - rect.left;
+
+  x = Math.max(0, Math.min(x, rect.width));
+
+  let percent = (x / rect.width) * 100;
+
+  slider.style.left = percent + "%";
+  afterImage.style.width = percent + "%";
+});
+</script>
 </body>
 </html>
 
