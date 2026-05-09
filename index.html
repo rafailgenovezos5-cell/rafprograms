@@ -977,50 +977,36 @@
   if (window.visualViewport) window.visualViewport.addEventListener("resize", resize);
   resize();
 
-  // A single flame particle spawned along the 4 edges (frame)
-  function Particle() { this.reset(); }
+  // Only left and right edges — slower speed
+  function Particle(forcedEdge) { this._forcedEdge = forcedEdge; this.reset(); }
   Particle.prototype.reset = function() {
-    // Pick a random edge: 0=bottom, 1=top, 2=left, 3=right
-    var edge = Math.floor(Math.random() * 4);
-    var margin = 30; // how far from the very edge to spawn
-    if (edge === 0) {        // bottom
-      this.x = Math.random() * W;
-      this.y = H - Math.random() * margin * 0.5;
-      this.vx = (Math.random() - 0.5) * 0.6;
-      this.vy = -(0.0004 + Math.random() * 0.0008);
-      this.angle = 0;
-    } else if (edge === 1) { // top
-      this.x = Math.random() * W;
-      this.y = Math.random() * margin * 0.5;
-      this.vx = (Math.random() - 0.5) * 0.6;
-      this.vy = (0.0004 + Math.random() * 0.0008);
-      this.angle = Math.PI;
-    } else if (edge === 2) { // left
+    // Always use the locked edge — never switch sides
+    var edge = this._forcedEdge;
+    var margin = 30;
+    if (edge === 2) { // left
       this.x = Math.random() * margin * 0.5;
       this.y = Math.random() * H;
-      this.vx = (0.0004 + Math.random() * 0.0008);
-      this.vy = -(Math.random() * 0.8);
-      this.angle = -Math.PI / 2;
-    } else {                 // right
+      this.vx = (0.00005 + Math.random() * 0.0001);
+      this.vy = -(0.04 + Math.random() * 0.08);
+    } else {          // right
       this.x = W - Math.random() * margin * 0.5;
       this.y = Math.random() * H;
-      this.vx = -(0.0004 + Math.random() * 0.0008);
-      this.vy = -(Math.random() * 0.8);
-      this.angle = Math.PI / 2;
+      this.vx = -(0.00005 + Math.random() * 0.0001);
+      this.vy = -(0.04 + Math.random() * 0.08);
     }
     this.life      = 1.0;
-    this.decay     = 0.004 + Math.random() * 0.006;
+    this.decay     = 0.0008 + Math.random() * 0.0012;
     this.size      = 2.5 + Math.random() * 4.5;
-    this.hue       = 8 + Math.random() * 28;   // red-orange
+    this.hue       = 8 + Math.random() * 28;
     this.wobble    = Math.random() * Math.PI * 2;
-    this.wobbleSpd = 0.00008 + Math.random() * 0.00012;
+    this.wobbleSpd = 0.00002 + Math.random() * 0.00003;
   };
 
   Particle.prototype.update = function() {
     this.wobble += this.wobbleSpd;
-    this.x += this.vx + Math.sin(this.wobble) * 0.7;
+    this.x += this.vx + Math.sin(this.wobble) * 0.12;
     this.y += this.vy;
-    this.size  *= 0.984;
+    this.size  *= 0.995;
     this.life  -= this.decay;
     if (this.life <= 0 || this.size < 1) this.reset();
   };
@@ -1040,29 +1026,26 @@
     ctx.restore();
   };
 
-  // Ember sparks
-  function Ember() { this.reset(); }
+  // Embers — only left and right edges, slower
+  function Ember(forcedEdge) { this._forcedEdge = forcedEdge; this.reset(); }
   Ember.prototype.reset = function() {
-    var edge = Math.floor(Math.random() * 4);
-    if (edge === 0)      { this.x = Math.random() * W; this.y = H; }
-    else if (edge === 1) { this.x = Math.random() * W; this.y = 0; }
-    else if (edge === 2) { this.x = 0; this.y = Math.random() * H; }
-    else                 { this.x = W; this.y = Math.random() * H; }
-    this.vx   = (Math.random() - 0.5) * 1.2;
-    this.vy   = -(0.0004 + Math.random() * 0.0008);
-    if (edge === 1) this.vy = Math.abs(this.vy);
-    if (edge === 2) this.vx = Math.abs(this.vx);
-    if (edge === 3) this.vx = -Math.abs(this.vx);
+    var edge = this._forcedEdge;
+    if (edge === 2) { this.x = 0;  this.y = Math.random() * H; }
+    else            { this.x = W;  this.y = Math.random() * H; }
+    this.vx   = edge === 2
+      ? (0.04 + Math.random() * 0.08)
+      : -(0.04 + Math.random() * 0.08);
+    this.vy   = -(0.025 + Math.random() * 0.06);
     this.life  = 1;
-    this.decay = 0.004 + Math.random() * 0.006;
+    this.decay = 0.0008 + Math.random() * 0.0012;
     this.size  = 0.4 + Math.random() * 0.8;
     this.hue   = 15 + Math.random() * 25;
     this.wobble    = Math.random() * Math.PI * 2;
-    this.wobbleSpd = 0.00008 + Math.random() * 0.00012;
+    this.wobbleSpd = 0.00002 + Math.random() * 0.00003;
   };
   Ember.prototype.update = function() {
     this.wobble += this.wobbleSpd;
-    this.x += this.vx + Math.sin(this.wobble) * 0.4;
+    this.x += this.vx + Math.sin(this.wobble) * 0.07;
     this.y += this.vy;
     this.life -= this.decay;
     if (this.life <= 0) this.reset();
@@ -1081,16 +1064,15 @@
     ctx.restore();
   };
 
-  // Create particles spread across all 4 edges
   var particles = [];
   var embers = [];
   for (var i = 0; i < 120; i++) {
-    var p = new Particle();
-    p.life = Math.random(); // stagger on load
+    var p = new Particle(i < 60 ? 2 : 3); // first 60 left, next 60 right
+    p.life = Math.random();
     particles.push(p);
   }
   for (var j = 0; j < 60; j++) {
-    var e = new Ember();
+    var e = new Ember(j < 30 ? 2 : 3); // first 30 left, next 30 right
     e.life = Math.random();
     embers.push(e);
   }
