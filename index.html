@@ -713,7 +713,7 @@
 </head>
 <body>
   <!-- FIRE CANVAS -->
-  <canvas id="fireCanvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;opacity:0.7;-webkit-mask-image:linear-gradient(to right, black 0%, black 8%, transparent 22%, transparent 78%, black 92%, black 100%);mask-image:linear-gradient(to right, black 0%, black 8%, transparent 22%, transparent 78%, black 92%, black 100%);"></canvas>
+  <canvas id="fireCanvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;opacity:0.4;-webkit-mask-image:linear-gradient(to right, black 0%, black 8%, transparent 22%, transparent 78%, black 92%, black 100%);mask-image:linear-gradient(to right, black 0%, black 8%, transparent 22%, transparent 78%, black 92%, black 100%);"></canvas>
 
   <nav class="nav" style="position:sticky;z-index:50;">
     <div class="container nav-inner">
@@ -996,7 +996,7 @@
     }
     this.life      = 1.0;
     this.decay     = 0.0008 + Math.random() * 0.0012;
-    this.size      = 2.5 + Math.random() * 4.5;
+    this.size      = 1.0 + Math.random() * 2.0;
     this.hue       = 8 + Math.random() * 28;
     this.wobble    = Math.random() * Math.PI * 2;
     this.wobbleSpd = 0.00002 + Math.random() * 0.00003;
@@ -1038,7 +1038,7 @@
     this.vy   = -(0.025 + Math.random() * 0.06);
     this.life  = 1;
     this.decay = 0.0008 + Math.random() * 0.0012;
-    this.size  = 0.4 + Math.random() * 0.8;
+    this.size  = 0.2 + Math.random() * 0.4;
     this.hue   = 15 + Math.random() * 25;
     this.wobble    = Math.random() * Math.PI * 2;
     this.wobbleSpd = 0.00002 + Math.random() * 0.00003;
