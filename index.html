@@ -503,6 +503,9 @@
       flex-wrap: wrap;
     }
 
+    .nav { z-index: 50 !important; }
+    .container, section, .hero, footer { position: relative; z-index: 2; }
+
     /* ── BEFORE / AFTER SLIDER ── */
     .hero-image {
       display: flex;
@@ -530,15 +533,15 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center top;
+      object-position: center 10%;
       display: block;
       pointer-events: none;
       -webkit-user-drag: none;
       user-select: none;
     }
 
-    .ba-after  { z-index: 1; }
-    .ba-before { z-index: 2; clip-path: inset(0 50% 0 0); }
+    .ba-after  { z-index: 1; object-position: center 5%; }
+    .ba-before { z-index: 2; clip-path: inset(0 50% 0 0); object-position: center 10%; }
 
     .ba-divider {
       position: absolute;
@@ -641,6 +644,67 @@
       }
     }
 
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulseCta {
+      0%, 100% { box-shadow: 0 16px 40px rgba(220,38,38,0.28); }
+      50%       { box-shadow: 0 16px 55px rgba(220,38,38,0.55); }
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .feature-card {
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 28px 60px rgba(0,0,0,0.45);
+      border-color: rgba(220,38,38,0.35);
+    }
+
+    .point {
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .point:hover {
+      transform: translateY(-3px);
+      border-color: rgba(220,38,38,0.3);
+    }
+
+    .btn-primary {
+      animation: pulseCta 2.8s ease-in-out infinite;
+    }
+
+    .btn-primary:hover {
+      animation: none;
+      transform: translateY(-3px);
+      box-shadow: 0 20px 50px rgba(220,38,38,0.5);
+    }
+
+    .included-item {
+      transition: background 0.2s ease;
+    }
+
+    .included-item:hover {
+      background: rgba(255,255,255,0.03);
+      border-radius: 12px;
+      padding-left: 8px;
+    }
+
     html, body, * {
       user-select: none !important;
       -webkit-user-select: none !important;
@@ -648,7 +712,10 @@
   </style>
 </head>
 <body>
-  <nav class="nav">
+  <!-- FIRE CANVAS -->
+  <canvas id="fireCanvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;opacity:0.7;"></canvas>
+
+  <nav class="nav" style="position:sticky;z-index:50;">
     <div class="container nav-inner">
       <div class="brand">
         <img src="logo.png" style="height:80px;">
@@ -661,25 +728,25 @@
     </div>
   </nav>
 
-  <main id="top">
+  <main id="top" style="position:relative;z-index:1;">
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <div class="eyebrow">🔥 Discipline • Flexibility • Real Results</div>
-          <h1>
+          <div class="eyebrow fade-up">🔥 Discipline • Flexibility • Real Results</div>
+          <h1 class="fade-up">
             Build <span class="gradient-text">Discipline</span> and<br>
             move with power.
           </h1>
-          <p class="lead">
+          <p class="lead fade-up">
             RAF Program is a modern training system designed to build strength, improve flexibility, and help your body move better. Many programs make people feel stiff and limited. RAF Program is built to make you stronger, more athletic, more disciplined, and more flexible.
           </p>
 
-          <div class="hero-actions">
+          <div class="hero-actions fade-up">
             <a class="btn btn-primary" href="#buy">Get RAF Program </a>
             <a class="btn btn-secondary" href="#features">See the Benefits</a>
           </div>
 
-          <div class="hero-points">
+          <div class="hero-points fade-up">
             <div class="point">
               <strong>Build Real Strength</strong>
               <span>A clear system designed to help you train hard and progress with purpose.</span>
@@ -727,7 +794,7 @@
 
     <section id="features">
       <div class="container">
-        <div class="section-head">
+        <div class="section-head fade-up">
           <div>
             <h2>Why choose RAF Program?</h2>
             <p>
@@ -737,24 +804,24 @@
         </div>
 
         <div class="features-grid">
-          <div class="feature-card">
+          <div class="feature-card fade-up">
             <div class="icon">🪖</div>
             <h3>Military Discipline</h3>
             <p>Develop a disciplined training mindset. RAF Program helps you train with consistency, focus, and structure like a disciplined athlete.</p>
           </div>
-          <div class="feature-card">
+          <div class="feature-card fade-up">
             <div class="icon">⚡</div>
             <h3>Strength Without Stiffness</h3>
             <p>Train with purpose and intensity without turning your body into something slow, tight, or restricted.</p>
           </div>
 
-          <div class="feature-card">
+          <div class="feature-card fade-up">
             <div class="icon">🏋️</div>
             <h3>Flexible and Athletic</h3>
             <p>RAF Program helps your body become stronger while staying mobile, fluid, and ready for real movement.</p>
           </div>
 
-          <div class="feature-card">
+          <div class="feature-card fade-up">
             <div class="icon">🎯</div>
             <h3>Simple and Effective</h3>
             <p>No fluff, no confusion, just a focused system built to deliver better performance.</p>
@@ -765,7 +832,7 @@
 
     <section id="pricing">
       <div class="container pricing-wrap">
-        <div class="section-card">
+        <div class="section-card fade-up">
           <div class="section-head" style="margin-bottom: 10px;">
             <div>
               <h2>What you get</h2>
@@ -800,7 +867,7 @@
           </div>
         </div>
 
-        <div class="price-card" id="buy">
+        <div class="price-card fade-up" id="buy">
           <span class="price-tag">RAF Program • Strength & Flexibility</span>
           <h2 class="price-amount">€20</h2>
           <p class="price-note">
@@ -819,7 +886,7 @@
     </section>
   </main>
 
-  <footer class="footer">
+  <footer class="footer" style="position:relative;z-index:1;">
     <div class="container">
       <div class="footer-box">
         <span>© 2026 Raf Program. All rights reserved.</span>
@@ -877,9 +944,163 @@
       }, { passive: true });
       window.addEventListener('touchend', () => { dragging = false; });
 
+      // Scroll fade-up animations
+      const fadeEls = document.querySelectorAll(".fade-up");
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+          if (e.isIntersecting) {
+            setTimeout(() => e.target.classList.add("visible"), i * 80);
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      fadeEls.forEach(el => io.observe(el));
+
       // Start at 50 %
       setPosition(50);
     })();
   </script>
 </body>
 </html>
+<script>
+(function() {
+  const canvas = document.getElementById("fireCanvas");
+  const ctx = canvas.getContext("2d");
+  let W, H;
+
+  function resize() {
+    var vp = window.visualViewport;
+    W = canvas.width  = vp ? vp.width  : window.innerWidth;
+    H = canvas.height = vp ? vp.height : window.innerHeight;
+  }
+  window.addEventListener("resize", resize);
+  if (window.visualViewport) window.visualViewport.addEventListener("resize", resize);
+  resize();
+
+  // A single flame particle spawned along the 4 edges (frame)
+  function Particle() { this.reset(); }
+  Particle.prototype.reset = function() {
+    // Pick a random edge: 0=bottom, 1=top, 2=left, 3=right
+    var edge = Math.floor(Math.random() * 4);
+    var margin = 30; // how far from the very edge to spawn
+    if (edge === 0) {        // bottom
+      this.x = Math.random() * W;
+      this.y = H - Math.random() * margin * 0.5;
+      this.vx = (Math.random() - 0.5) * 0.6;
+      this.vy = -(0.0004 + Math.random() * 0.0008);
+      this.angle = 0;
+    } else if (edge === 1) { // top
+      this.x = Math.random() * W;
+      this.y = Math.random() * margin * 0.5;
+      this.vx = (Math.random() - 0.5) * 0.6;
+      this.vy = (0.0004 + Math.random() * 0.0008);
+      this.angle = Math.PI;
+    } else if (edge === 2) { // left
+      this.x = Math.random() * margin * 0.5;
+      this.y = Math.random() * H;
+      this.vx = (0.0004 + Math.random() * 0.0008);
+      this.vy = -(Math.random() * 0.8);
+      this.angle = -Math.PI / 2;
+    } else {                 // right
+      this.x = W - Math.random() * margin * 0.5;
+      this.y = Math.random() * H;
+      this.vx = -(0.0004 + Math.random() * 0.0008);
+      this.vy = -(Math.random() * 0.8);
+      this.angle = Math.PI / 2;
+    }
+    this.life      = 1.0;
+    this.decay     = 0.004 + Math.random() * 0.006;
+    this.size      = 2.5 + Math.random() * 4.5;
+    this.hue       = 8 + Math.random() * 28;   // red-orange
+    this.wobble    = Math.random() * Math.PI * 2;
+    this.wobbleSpd = 0.00008 + Math.random() * 0.00012;
+  };
+
+  Particle.prototype.update = function() {
+    this.wobble += this.wobbleSpd;
+    this.x += this.vx + Math.sin(this.wobble) * 0.7;
+    this.y += this.vy;
+    this.size  *= 0.984;
+    this.life  -= this.decay;
+    if (this.life <= 0 || this.size < 1) this.reset();
+  };
+
+  Particle.prototype.draw = function() {
+    ctx.save();
+    ctx.globalAlpha = Math.pow(this.life, 1.4) * 0.82;
+    var g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+    g.addColorStop(0,    "hsl(" + this.hue + ",100%,90%)");
+    g.addColorStop(0.25, "hsl(" + this.hue + ",100%,65%)");
+    g.addColorStop(0.6,  "hsl(" + (this.hue+10) + ",90%,40%)");
+    g.addColorStop(1,    "hsla(" + this.hue + ",80%,20%,0)");
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  };
+
+  // Ember sparks
+  function Ember() { this.reset(); }
+  Ember.prototype.reset = function() {
+    var edge = Math.floor(Math.random() * 4);
+    if (edge === 0)      { this.x = Math.random() * W; this.y = H; }
+    else if (edge === 1) { this.x = Math.random() * W; this.y = 0; }
+    else if (edge === 2) { this.x = 0; this.y = Math.random() * H; }
+    else                 { this.x = W; this.y = Math.random() * H; }
+    this.vx   = (Math.random() - 0.5) * 1.2;
+    this.vy   = -(0.0004 + Math.random() * 0.0008);
+    if (edge === 1) this.vy = Math.abs(this.vy);
+    if (edge === 2) this.vx = Math.abs(this.vx);
+    if (edge === 3) this.vx = -Math.abs(this.vx);
+    this.life  = 1;
+    this.decay = 0.004 + Math.random() * 0.006;
+    this.size  = 0.4 + Math.random() * 0.8;
+    this.hue   = 15 + Math.random() * 25;
+    this.wobble    = Math.random() * Math.PI * 2;
+    this.wobbleSpd = 0.00008 + Math.random() * 0.00012;
+  };
+  Ember.prototype.update = function() {
+    this.wobble += this.wobbleSpd;
+    this.x += this.vx + Math.sin(this.wobble) * 0.4;
+    this.y += this.vy;
+    this.life -= this.decay;
+    if (this.life <= 0) this.reset();
+  };
+  Ember.prototype.draw = function() {
+    ctx.save();
+    ctx.globalAlpha = this.life * 0.9;
+    var g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+    g.addColorStop(0,   "hsl(" + this.hue + ",100%,95%)");
+    g.addColorStop(0.5, "hsl(" + this.hue + ",100%,65%)");
+    g.addColorStop(1,   "hsla(" + this.hue + ",100%,30%,0)");
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  };
+
+  // Create particles spread across all 4 edges
+  var particles = [];
+  var embers = [];
+  for (var i = 0; i < 120; i++) {
+    var p = new Particle();
+    p.life = Math.random(); // stagger on load
+    particles.push(p);
+  }
+  for (var j = 0; j < 60; j++) {
+    var e = new Ember();
+    e.life = Math.random();
+    embers.push(e);
+  }
+
+  function loop() {
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < particles.length; i++) { particles[i].update(); particles[i].draw(); }
+    for (var j = 0; j < embers.length; j++)    { embers[j].update();    embers[j].draw(); }
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+</script>
