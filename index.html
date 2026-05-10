@@ -938,17 +938,17 @@
   function Particle() { this.reset(true); }
   Particle.prototype.reset = function(init) {
     var side = Math.random() < 0.5 ? 0 : 1; // 0=left, 1=right
-    var stripW = 10; // max pixels from edge
+    var stripW = 6; // max pixels from edge
     if (side === 0) {
       this.x = Math.random() * stripW;
-      this.vx = 0.0003 + Math.random() * 0.001;
+      this.vx = 0.0001 + Math.random() * 0.0003;
     } else {
       this.x = W - Math.random() * stripW;
-      this.vx = -(0.0003 + Math.random() * 0.001);
+      this.vx = -(0.0001 + Math.random() * 0.0003);
     }
     this.y       = Math.random() * H;
     this.vy      = -(0.0008 + Math.random() * 0.002);
-    this.size    = 1.2 + Math.random() * 2.0;
+    this.size    = 0.8 + Math.random() * 1.2;
     this.life    = init ? Math.random() : 1.0;
     this.decay   = 0.002 + Math.random() * 0.003;
     this.hue     = 8 + Math.random() * 25;
@@ -979,6 +979,14 @@
   var particles = [];
   for (var i = 0; i < 60; i++) {
     particles.push(new Particle());
+  }
+  // Extra particles for right side only
+  for (var i = 0; i < 40; i++) {
+    var p = new Particle();
+    p.x = W - Math.random() * 6;
+    p.vx = -(0.0001 + Math.random() * 0.0003);
+    p.life = Math.random();
+    particles.push(p);
   }
 
   var lastTime = 0;
