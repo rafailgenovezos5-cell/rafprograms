@@ -845,9 +845,9 @@
       <div class="footer-box">
         <span>© 2026 Raf Program. All rights reserved.</span>
         <span>Build strength. Stay flexible. Move better.</span>
-        <div style="margin-top: 15px;">
+        <div style="display:flex;align-items:center;gap:12px;">
           <a href="https://www.instagram.com/rafprograms/?hl=el" target="_blank">
-            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="28" style="margin-right: 15px;">
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="28">
           </a>
           <a href="https://www.youtube.com/@rafgenovezos" target="_blank">
             <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="28">
@@ -923,12 +923,15 @@
   let W, H;
 
   function resize() {
-    var vp = window.visualViewport;
-    W = canvas.width  = vp ? vp.width  : window.innerWidth;
-    H = canvas.height = vp ? vp.height : window.innerHeight;
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
   }
   window.addEventListener("resize", resize);
-  if (window.visualViewport) window.visualViewport.addEventListener("resize", resize);
+  // Re-resize on zoom via visualViewport
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", resize);
+    window.visualViewport.addEventListener("scroll", resize);
+  }
   resize();
 
   // Only left and right edge particles, very thin strip
