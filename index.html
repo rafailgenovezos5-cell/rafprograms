@@ -503,6 +503,9 @@
       flex-wrap: wrap;
     }
 
+    .nav { z-index: 50 !important; }
+    .container, section, .hero, footer { position: relative; z-index: 2; }
+
     /* ── BEFORE / AFTER SLIDER ── */
     .hero-image {
       display: flex;
@@ -530,15 +533,15 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center top;
+      object-position: center 10%;
       display: block;
       pointer-events: none;
       -webkit-user-drag: none;
       user-select: none;
     }
 
-    .ba-after  { z-index: 1; }
-    .ba-before { z-index: 2; clip-path: inset(0 50% 0 0); }
+    .ba-after  { z-index: 1; object-position: center 5%; }
+    .ba-before { z-index: 2; clip-path: inset(0 50% 0 0); object-position: center 10%; }
 
     .ba-divider {
       position: absolute;
@@ -641,14 +644,32 @@
       }
     }
 
+    
+
     html, body, * {
       user-select: none !important;
       -webkit-user-select: none !important;
     }
+  
+    @keyframes pulseCta {
+      0%, 100% { box-shadow: 0 16px 40px rgba(220,38,38,0.28); }
+      50%       { box-shadow: 0 16px 55px rgba(220,38,38,0.65); }
+    }
+    #buyBtn {
+      animation: pulseCta 2.4s ease-in-out infinite;
+    }
+    #buyBtn:hover {
+      animation: none;
+      transform: translateY(-3px);
+      box-shadow: 0 20px 50px rgba(220,38,38,0.5);
+    }
   </style>
 </head>
 <body>
-  <nav class="nav">
+  <!-- FIRE CANVAS -->
+  <canvas id="fireCanvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;opacity:0.75;"></canvas>
+
+  <nav class="nav" style="position:sticky;z-index:50;">
     <div class="container nav-inner">
       <div class="brand">
         <img src="logo.png" style="height:80px;">
@@ -661,12 +682,12 @@
     </div>
   </nav>
 
-  <main id="top">
+  <main id="top" style="position:relative;z-index:1;">
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-copy">
           <div class="eyebrow">🔥 Discipline • Flexibility • Real Results</div>
-          <h1>
+          <h1 class="fade-up">
             Build <span class="gradient-text">Discipline</span> and<br>
             move with power.
           </h1>
@@ -700,13 +721,13 @@
           <div class="ba-slider" id="baSlider">
             <!-- AFTER = dark shirt (bottom layer, always visible) -->
             <img class="ba-after"
-                 src="1000019503.webp"
+                 src="after.jpg"
                  alt="After RAF Program"
                  oncontextmenu="return false;"
                  draggable="false">
             <!-- BEFORE = basketball jersey (top layer, clipped) -->
             <img class="ba-before" id="baBeforeImg"
-                 src="1000002907.jpg"
+                 src="before.jpg"
                  alt="Before RAF Program"
                  oncontextmenu="return false;"
                  draggable="false">
@@ -778,4 +799,210 @@
               <div class="check">✓</div>
               <div>
                 <strong>Structured Training Plan</strong>
-                <span>A complete layout that shows you how to train with direction, in
+                <span>A complete layout that shows you how to train with direction, intensity, and consistency.</span>
+              </div>
+            </div>
+
+            <div class="included-item">
+              <div class="check">✓</div>
+              <div>
+                <strong>Strength + Flexibility Focus</strong>
+                <span>The system is designed to improve force, control, and mobility instead of making you feel stiff.</span>
+              </div>
+            </div>
+
+            <div class="included-item">
+              <div class="check">✓</div>
+              <div>
+                <strong>Easy to Follow Format</strong>
+                <span>Simple, clean, and direct so you can focus on training and getting results.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="price-card" id="buy">
+          <span class="price-tag">RAF Program • Strength & Flexibility</span>
+          <h2 class="price-amount">€20</h2>
+          <p class="price-note">
+            If you are tired of programs that make you feel tight, slow, and restricted, RAF Program gives you a better path. Build strength, improve flexibility, and train your body to perform and move the way it should.
+          </p>
+
+          <div class="price-perks">
+            <div>Build strength with purpose</div>
+            <div>Improve flexibility and movement</div>
+            <div>Start today for only €20</div>
+          </div>
+
+          <a class="btn btn-primary" id="buyBtn" href="https://buy.stripe.com/aFa3cwcgTgiIe5s5NE93y00" target="_blank">Buy RAF Program</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" style="position:relative;z-index:1;">
+    <div class="container">
+      <div class="footer-box">
+        <span>© 2026 Raf Program. All rights reserved.</span>
+        <span>Build strength. Stay flexible. Move better.</span>
+        <div style="margin-top: 15px;">
+          <a href="https://www.instagram.com/rafprograms/?hl=el" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="28" style="margin-right: 15px;">
+          </a>
+          <a href="https://www.youtube.com/@rafgenovezos" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" width="28">
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const slider   = document.getElementById('baSlider');
+      const beforeImg= document.getElementById('baBeforeImg');
+      const divider  = document.getElementById('baDivider');
+      const handle   = document.getElementById('baHandle');
+
+      let dragging = false;
+
+      function setPosition(pct) {
+        pct = Math.max(0, Math.min(100, pct));
+        beforeImg.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+        divider.style.left  = pct + '%';
+        handle.style.left   = pct + '%';
+      }
+
+      function getPercent(clientX) {
+        const rect = slider.getBoundingClientRect();
+        return ((clientX - rect.left) / rect.width) * 100;
+      }
+
+      // Mouse
+      slider.addEventListener('mousedown', e => {
+        dragging = true;
+        setPosition(getPercent(e.clientX));
+      });
+      window.addEventListener('mousemove', e => {
+        if (dragging) setPosition(getPercent(e.clientX));
+      });
+      window.addEventListener('mouseup', () => { dragging = false; });
+
+      // Touch
+      slider.addEventListener('touchstart', e => {
+        dragging = true;
+        setPosition(getPercent(e.touches[0].clientX));
+      }, { passive: true });
+      window.addEventListener('touchmove', e => {
+        if (dragging) setPosition(getPercent(e.touches[0].clientX));
+      }, { passive: true });
+      window.addEventListener('touchend', () => { dragging = false; });
+
+      // Scroll animations
+      const fadeEls = document.querySelectorAll(".fade-up");
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+          if (e.isIntersecting) {
+            setTimeout(() => e.target.classList.add("visible"), i * 80);
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      fadeEls.forEach(el => io.observe(el));
+
+      // Start at 50 %
+      setPosition(50);
+    })();
+  </script>
+</body>
+</html>
+<script>
+(function() {
+  const canvas = document.getElementById("fireCanvas");
+  const ctx = canvas.getContext("2d");
+  let W, H;
+
+  function resize() {
+    var vp = window.visualViewport;
+    W = canvas.width  = vp ? vp.width  : window.innerWidth;
+    H = canvas.height = vp ? vp.height : window.innerHeight;
+  }
+  window.addEventListener("resize", resize);
+  if (window.visualViewport) window.visualViewport.addEventListener("resize", resize);
+  resize();
+
+  // Only left and right edge particles, very thin strip
+  function Particle() { this.reset(true); }
+  Particle.prototype.reset = function(init) {
+    var side = Math.random() < 0.5 ? 0 : 1; // 0=left, 1=right
+    var stripW = 10; // max pixels from edge
+    if (side === 0) {
+      this.x = Math.random() * stripW;
+      this.vx = 0.0003 + Math.random() * 0.001;
+    } else {
+      this.x = W - Math.random() * stripW;
+      this.vx = -(0.0003 + Math.random() * 0.001);
+    }
+    this.y       = Math.random() * H;
+    this.vy      = -(0.0008 + Math.random() * 0.002);
+    this.size    = 1.2 + Math.random() * 2.0;
+    this.life    = init ? Math.random() : 1.0;
+    this.decay   = 0.002 + Math.random() * 0.003;
+    this.hue     = 8 + Math.random() * 25;
+    this.wobble  = Math.random() * Math.PI * 2;
+    this.wobSpd  = 0.00008 + Math.random() * 0.00012;
+  };
+  Particle.prototype.update = function() {
+    this.wobble += this.wobSpd;
+    this.x += this.vx + Math.sin(this.wobble) * 0.15;
+    this.y += this.vy;
+    this.life -= this.decay;
+    if (this.life <= 0 || this.y < -10) this.reset(false);
+  };
+  Particle.prototype.draw = function() {
+    ctx.save();
+    ctx.globalAlpha = Math.pow(this.life, 1.3) * 0.8;
+    var g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+    g.addColorStop(0,   "hsl(" + this.hue + ",100%,90%)");
+    g.addColorStop(0.4, "hsl(" + this.hue + ",100%,60%)");
+    g.addColorStop(1,   "hsla(" + this.hue + ",90%,30%,0)");
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  };
+
+  var particles = [];
+  for (var i = 0; i < 60; i++) {
+    particles.push(new Particle());
+  }
+
+  var lastTime = 0;
+  var FPS = 24;
+  var interval = 1000 / FPS;
+
+  function loop(timestamp) {
+    requestAnimationFrame(loop);
+    var delta = timestamp - lastTime;
+    if (delta < interval) return;
+    lastTime = timestamp - (delta % interval);
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < particles.length; i++) {
+      particles[i].update();
+      particles[i].draw();
+    }
+  }
+  // Ensure it starts after full page load
+  if (document.readyState === "complete") {
+    requestAnimationFrame(loop);
+  } else {
+    window.addEventListener("load", function() { requestAnimationFrame(loop); });
+  }
+
+  document.addEventListener("visibilitychange", function() {
+    FPS = document.hidden ? 0 : 24;
+    interval = FPS > 0 ? 1000 / FPS : 999999;
+  });
+})();
+</script>
