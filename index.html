@@ -914,10 +914,7 @@
   const ctx = canvas.getContext("2d");
   let W, H, stars = [];
 
-  function resize() {
-    var vp = window.visualViewport;
-    W = canvas.width  = vp ? vp.width  : window.innerWidth;
-    H = canvas.height = vp ? vp.height : window.innerHeight;
+  function initStars() {
     stars = [];
     const count = Math.floor((W * H) / 2800);
     for (let i = 0; i < count; i++) {
@@ -933,9 +930,16 @@
     }
   }
 
+  function resize() {
+    // Only update canvas size, never recreate stars on zoom
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
   window.addEventListener("resize", resize);
-  if (window.visualViewport) window.visualViewport.addEventListener("resize", resize);
+  // Do NOT listen to visualViewport resize — that fires on zoom and resets stars
   resize();
+  initStars();
 
   var lastTime = 0;
   var t = 0;
